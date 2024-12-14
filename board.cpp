@@ -46,7 +46,7 @@ bool Board::winCondition() const {
          *tzn. dla j = 0 sprawdza czy pierwsza kolumna albo pierwszy wiersz
          *wygrywaja itd..
         */
-        if (checkLine(grid[j][0], grid[j][1], grid[j][2], grid[j][3]))
+        if (checkLine(grid[j][0], grid[j][1], grid[j][2], grid[j][3])
         || checkLine(grid[0][j], grid[1][j], grid[2][j], grid[3][j])) {
             return true;
         }
