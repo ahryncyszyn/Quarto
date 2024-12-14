@@ -1,0 +1,1 @@
+//Zdefiniuj metody klasy "Piece"
