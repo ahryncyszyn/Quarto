@@ -61,15 +61,24 @@ bool Board::checkLine(Piece* p1, Piece* p2, Piece* p3, Piece* p4) const {
     //w lini jest mniej niz 4 pionki to zwraca od razu false
     if (!p1 || !p2 || !p3 || !p4) return false;
 
-    /*Jesli jakikolwiek atrybut jest dzielony przez wszystkie pionki w lini
+    /*Jesli atrybut wynosi 1 i jest dzielony przez wszystkie pionki w lini
      *Zwraca true i gra sie konczy.
-     *Operacja & zwraca 1 jesli wszystkie pornwane bity maja ten bit zapalony.
-     *Czyli jesli wszystkie sa jasne to bit 0 bedzie sie rownal 1.
+     *Operacja & zwraca 1 jesli wszystkie porownane bity maja ten sam bit zapalony.
+     *Dziala tylko dla 1. Operacja dla dzielonych 0 ponizej.
     */
     std::bitset<4>  sum = p1->attributes & p2->attributes & p3->attributes
     & p4->attributes;
 
     //any() sprawdza czy jakikolwiek bit sumy jest zapalony
     //Jesli tak to gra sie konczy
-    return sum.any();
+    if (sum.any()) return true;
+
+    /*Teraz sprawdza czy bity maja 0 w tych samych miejscach. Wtedy gra tez sie skonczy.
+     *Operacja OR sprawdza czy przynajmniej jeden bit jest zapalony, wtedy zwraca 1.
+     *Negacja zamienia wszystkie 0 na 1 wiec zwrocony jest bit ktory nie jest zapalony dla wszystkich liczb
+     *Czyli dzielony atrybut.
+    */
+    std::bitset<4> inverse = ~(p1->attributes | p2->attributes | p3->attributes | p4->attributes);
+
+    return inverse.any();
 }
