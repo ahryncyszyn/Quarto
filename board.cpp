@@ -59,8 +59,7 @@ bool Board::winCondition() const {
             for (int column = 0; column < 3; column++) {
                 // Sprawdzamy czy na jakimkolwiek kwadracie na planszy 
                 // wszystkie pionki maja te same atrybuty
-                if (row < 3 && column < 3 && checkLine(grid[row][column], 
-                grid[row][column + 1], grid[row +1 ][column], grid[row + 1][column + 1])) {
+                if (checkLine(grid[row][column], grid[row][column + 1], grid[row +1 ][column], grid[row + 1][column + 1])) {
                     return true;
                 }
             }
