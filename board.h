@@ -1,4 +1,5 @@
 #include <vector>
+#include <bits/stdc++.h>
 #include "piece.h"
 
 class Board {
@@ -9,8 +10,10 @@ private:
 
     //Deklaruje tablice 1D, ktora przetrzymuje wszystkie pionki.
     std::vector<Piece> pieces;
+    
 
 public:
+    int last_piece_indeks = -1;
     //Konstruktor
     Board();
 
@@ -22,6 +25,6 @@ public:
     bool winCondition() const;
 
 private:
-    //Sprawdza czy pionki w jakiejs lini "wygrywaja" tzn. dziela podobna ceche.
+    //Sprawdza czy pionki w jakiejs lini "wygrywaja" tzn. dziela podobna ceche. 
     bool checkLine(Piece* p1, Piece* p2, Piece* p3, Piece* p4) const;
 };
