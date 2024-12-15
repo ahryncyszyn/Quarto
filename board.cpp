@@ -2,14 +2,15 @@
 
 //Definicja konstruktora. Inicjalizuje plansze jako tablice 4x4
 //gdzie kazda komorka to nullptr (czyli nie ma na niej jeszcze pionka)
-Board::Board() : grid(4, std::vector<Piece*>(4, nullptr)) {
+Board::Board(bool advanced_mode) : grid(4, std::vector<Piece*>(4, nullptr)), advanced_mode(advanced_mode) {
     for (int i = 0; i < 16; i++) {
-        //emplace_back() dodaje wszystkie 16 pionkow sprawdzajac wszystkie
-        //kombinacje 4 bitow atrybutow. Np dla i = 2 powstaje pionek
-        //bedzie 0010 czyli: jasny, okragly, pusty i niski.
-        //I tak iteruje przez wszystkie kombinacje atrybutow poniewaz
-        //kazdy pionek jest inny.
-        pieces.emplace_back(i & 8, i & 4, i & 2, i & 1);
+        /*emplace_back() dodaje wszystkie 16 pionkow sprawdzajac wszystkie
+         *kombinacje 4 bitow atrybutow. Np dla i = 2 powstaje pionek
+         *bedzie 0010 czyli: jasny, okragly, pusty i niski.
+         *I tak iteruje przez wszystkie kombinacje atrybutow poniewaz
+         *kazdy pionek jest inny.
+         *pieces.emplace_back(i & 8, i & 4, i & 2, i & 1);
+         */
     }
 }
 
@@ -45,7 +46,7 @@ bool Board::winCondition() const {
         /*Dla kazdego j sprawdza czy, jakas kolumna lub wiersz wygrywa
          *tzn. dla j = 0 sprawdza czy pierwsza kolumna albo pierwszy wiersz
          *wygrywaja itd..
-        */
+         */
         if (checkLine(grid[j][0], grid[j][1], grid[j][2], grid[j][3])
         || checkLine(grid[0][j], grid[1][j], grid[2][j], grid[3][j])) {
             return true;
@@ -65,7 +66,7 @@ bool Board::checkLine(Piece* p1, Piece* p2, Piece* p3, Piece* p4) const {
      *Zwraca true i gra sie konczy.
      *Operacja & zwraca 1 jesli wszystkie porownane bity maja ten sam bit zapalony.
      *Dziala tylko dla 1. Operacja dla dzielonych 0 ponizej.
-    */
+     */
     std::bitset<4>  sum = p1->attributes & p2->attributes & p3->attributes
     & p4->attributes;
 
@@ -77,7 +78,7 @@ bool Board::checkLine(Piece* p1, Piece* p2, Piece* p3, Piece* p4) const {
      *Operacja OR sprawdza czy przynajmniej jeden bit jest zapalony, wtedy zwraca 1.
      *Negacja zamienia wszystkie 0 na 1 wiec zwrocony jest bit ktory nie jest zapalony dla wszystkich liczb
      *Czyli dzielony atrybut.
-    */
+     */
     std::bitset<4> inverse = ~(p1->attributes | p2->attributes | p3->attributes | p4->attributes);
 
     return inverse.any();
