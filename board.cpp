@@ -9,8 +9,8 @@ Board::Board(bool advanced_mode) : grid(4, std::vector<Piece*>(4, nullptr)), adv
          *bedzie 0010 czyli: jasny, okragly, pusty i niski.
          *I tak iteruje przez wszystkie kombinacje atrybutow poniewaz
          *kazdy pionek jest inny.
-         *pieces.emplace_back(i & 8, i & 4, i & 2, i & 1);
          */
+        pieces.emplace_back(i & 8, i & 4, i & 2, i & 1);
     }
 }
 
@@ -53,13 +53,14 @@ bool Board::winCondition() const {
         }
     }
 
-    // Jesli zostanie wybrana bardziej zaawansowana wersja gry
+    // Jesli zostanie wybrana zaawansowana wersja gry
     if (advanced_mode) {
         for (int row = 0; row < 3; row++) {
             for (int column = 0; column < 3; column++) {
                 // Sprawdzamy czy na jakimkolwiek kwadracie na planszy 
-                // Wszystkie pionki maja te same atrybuty
-                if (checkLine(grid[row][column], grid[row][column + 1], grid[row +1 ][column], grid[row + 1][column + 1])) {
+                // wszystkie pionki maja te same atrybuty
+                if (row < 3 && column < 3 && checkLine(grid[row][column], 
+                grid[row][column + 1], grid[row +1 ][column], grid[row + 1][column + 1])) {
                     return true;
                 }
             }

@@ -3,6 +3,7 @@
 #include "piece.h"
 
 class Board {
+
 private:
     //Deklaruje tablice 2D gdzie kazdy element jest wskaznikiem na pionek.
     //nullptr jesli nie ma zadnego pinka jeszcze
@@ -17,6 +18,7 @@ private:
 
     //Sprawdza czy pionki w jakiejs lini "wygrywaja" tzn. dziela podobna ceche. 
     bool checkLine(Piece* p1, Piece* p2, Piece* p3, Piece* p4) const;
+
 public:
     int last_piece_indeks = -1;
 
