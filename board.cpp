@@ -52,6 +52,20 @@ bool Board::winCondition() const {
             return true;
         }
     }
+
+    // Jesli zostanie wybrana bardziej zaawansowana wersja gry
+    if (advanced_mode) {
+        for (int row = 0; row < 3; row++) {
+            for (int column = 0; column < 3; column++) {
+                // Sprawdzamy czy na jakimkolwiek kwadracie na planszy 
+                // Wszystkie pionki maja te same atrybuty
+                if (checkLine(grid[row][column], grid[row][column + 1], grid[row +1 ][column], grid[row + 1][column + 1])) {
+                    return true;
+                }
+            }
+        }
+    }
+    
     //Jesli zadna kolumna i wiersz nie wygrywaja to sprawdza przekątne.
     return checkLine(grid[0][0], grid[1][1], grid[2][2], grid[3][3])
     || checkLine(grid[0][3], grid[1][2], grid[2][1], grid[3][0]);

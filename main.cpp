@@ -6,7 +6,7 @@
 #include <iostream>
 #include "board.h"
 
-Board board; //nasza plansza
+Board board(false); // Nasza plansza. Zmien na true jesli chcesz zmienic na zaawansowana wersje zasad
 
 const int CELL_SIZE_LARGE = 100; // Rozmiar komórki dużej planszy
 const int GRID_SIZE_LARGE = 4;   // Rozmiar dużej planszy (GRID_SIZE_LARGE x GRID_SIZE_LARGE)
