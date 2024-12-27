@@ -105,7 +105,20 @@ void actualize_last_pawn(sf::RectangleShape pawns[], sf::Vector2i mousePos)
     }
 }
 
-int main() {
+void player_move(sf::Event event, sf::RectangleShape grid[][4], sf::RectangleShape pawns[], sf::Vector2i mousePos){
+// Sprawdzanie kliknięcia myszy
+    if (event.type == sf::Event::MouseButtonPressed && event.mouseButton.button == sf::Mouse::Left) { 
+        
+
+        int action = mousePosition(grid, pawns, mousePos);
+
+        if (action == 1) place_pawn(grid, mousePos);
+        if (action == 2) actualize_last_pawn(pawns, mousePos);
+        
+    }
+}
+
+int statePlay() {
 
     int windowWidth = 400; // Szerokość obu planszy jest równa
     int windowHeight = 500; // Wysokość jest sumą wysokości obu planszy
@@ -125,19 +138,13 @@ int main() {
                 window.close();
             }
 
-            // Sprawdzanie kliknięcia myszy
-            if (event.type == sf::Event::MouseButtonPressed && event.mouseButton.button == sf::Mouse::Left) { 
-                sf::Vector2i mousePos = sf::Mouse::getPosition(window);
+            sf::Vector2i mousePos = sf::Mouse::getPosition(window);//ruch prawdziwego gracza
+            player_move(event, grid, pawns, mousePos);
 
-                int action = mousePosition(grid, pawns, mousePos);
-
-                if (action == 1) place_pawn(grid, mousePos);
-                if (action == 2) actualize_last_pawn(pawns, mousePos);
-                if (board.winCondition()) {
-                    std::cout << "Wygrana";
-                    return 0;
-                }
-            }
+            if (board.winCondition()) {
+            std::cout << "Wygrana";
+            return 0;
+        }
         }
     
         //Logika gry. Interfejs ktory obsluguje input
@@ -164,4 +171,8 @@ int main() {
     }
 
     return 0;
+}
+
+int main(){
+    statePlay();
 }
