@@ -1,3 +1,5 @@
+#pragma once
+
 #include <vector>
 #include <bits/stdc++.h>
 #include "piece.h"
@@ -9,8 +11,12 @@ private:
     //nullptr jesli nie ma zadnego pinka jeszcze
     std::vector<std::vector<Piece*>> grid;
 
+//Tymczasowo public, żeby działał kod wybierania pionka (sprawdzenie dostępności) i zmiana available. 
+// Jeśli zostaniemy przy tej koncepcji, lepiej będzie zrobić getter + setter
+public:
     //Deklaruje tablice 1D, ktora przetrzymuje wszystkie pionki.
     std::vector<Piece> pieces;
+private:
     
     // Decyduje o tym czy gra będzie rozgrywana tylko
     // sprawdzając linie, czy rowniez kwadraty
