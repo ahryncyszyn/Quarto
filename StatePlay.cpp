@@ -66,6 +66,7 @@ void StatePlay::update() {
 }
 
 void StatePlay::draw() const {
+
     // Rysowanie dużej planszy
     for (int row = 0; row < GRID_SIZE_LARGE; ++row) {
         for (int col = 0; col < GRID_SIZE_LARGE; ++col) {
@@ -78,9 +79,31 @@ void StatePlay::draw() const {
         m_window->draw(pawns[ind]);
     }
 
-    // ==============================================================
-    // ==========    TUTAJ BĘDĄ RYSOWANE PIONKI     =================
-    // ==============================================================
+    // rysowanie wolnych do uzycia pionkow
+    for (int i = 0; i < m_board.pieces.size(); ++i)
+    {
+        const Piece& piece = m_board.pieces[i];
+        if (piece.available)
+        {
+            int row = i / GRID_SIZE_PAWNS_COLS;
+            int col = i % GRID_SIZE_PAWNS_COLS;
+            float x = col * CELL_SIZE_PAWNS + 10;
+            float y = GRID_SIZE_LARGE * CELL_SIZE_LARGE + row * CELL_SIZE_PAWNS + 10;
+            sf::Vector2f position(x, y);
+            piece.draw(*m_window, position, CELL_SIZE_PAWNS - 20);
+        }
+    }
+
+    // rysowanie pionkow ulozonych na planszy
+    for (int row = 0; row < GRID_SIZE_LARGE; ++row) {
+        for (int col = 0; col < GRID_SIZE_LARGE; ++col) {
+            const Piece* piece = m_board.getCell(row, col);
+            if (piece != nullptr) {
+                sf::Vector2f position(col * CELL_SIZE_LARGE + 10, row * CELL_SIZE_LARGE + 10);
+                piece->draw(*m_window, position, CELL_SIZE_LARGE - 20);
+            }
+        }
+    }
 }
 
 
