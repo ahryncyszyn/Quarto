@@ -2,6 +2,7 @@
 
 #include <bitset>
 #include <iostream>
+#include <SFML/Graphics.hpp>
 
 class Piece {
 public:
@@ -19,4 +20,6 @@ public:
 
     //Konstruktor
     Piece(bool dark, bool square, bool hollow, bool tall);
+
+    void draw(sf::RenderWindow& window, sf::Vector2f position, float size) const;
 };
