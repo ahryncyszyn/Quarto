@@ -11,11 +11,20 @@ private:
     //nullptr jesli nie ma zadnego pinka jeszcze
     std::vector<std::vector<Piece*>> grid;
 
-//Tymczasowo public, żeby działał kod wybierania pionka (sprawdzenie dostępności) i zmiana available. 
+// Tymczasowo public, żeby działał kod wybierania pionka (sprawdzenie dostępności) i zmiana available. 
 // Jeśli zostaniemy przy tej koncepcji, lepiej będzie zrobić getter + setter
 public:
     //Deklaruje tablice 1D, ktora przetrzymuje wszystkie pionki.
     std::vector<Piece> pieces;
+
+    // getter dla konkretnej komorki na planszy
+    Piece* getCell(int row, int column) const {
+        if (row >= 0 && row < grid.size() && column >= 0 && column < grid[row].size()) {
+            return grid[row][column];
+        }
+        return nullptr;
+    }
+
 private:
     
     // Decyduje o tym czy gra będzie rozgrywana tylko
