@@ -7,14 +7,14 @@
 class Board {
 
 private:
-    //Deklaruje tablice 2D gdzie kazdy element jest wskaznikiem na pionek.
+    //Deklaruje tablice 3D gdzie kazdy element jest wskaznikiem na pionek.
     //nullptr jesli nie ma zadnego pinka jeszcze
     std::vector<std::vector<Piece*>> grid;
 
 // Tymczasowo public, żeby działał kod wybierania pionka (sprawdzenie dostępności) i zmiana available. 
 // Jeśli zostaniemy przy tej koncepcji, lepiej będzie zrobić getter + setter
 public:
-    //Deklaruje tablice 1D, ktora przetrzymuje wszystkie pionki.
+    //Deklaruje tablice 2D, ktora przetrzymuje wszystkie pionki.
     std::vector<Piece> pieces;
 
     // getter dla konkretnej komorki na planszy
