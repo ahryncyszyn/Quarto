@@ -4,6 +4,10 @@
 #include <SFML/Graphics.hpp>
 #include <iostream> // tylko do debug
 
+sf::Color beige = sf::Color(225, 202, 168);
+const int windowWidth = 650;
+const int windowHeight = 825;
+
 
 StatePlay::StatePlay(sf::RenderWindow* window)
     : BaseState(window, StateType::Play), m_board(false) 
@@ -67,16 +71,32 @@ void StatePlay::update() {
 
 void StatePlay::draw() const {
 
-    // Rysowanie dużej planszy
+    // czarne tlo glownej planszy
+    sf::RectangleShape board_background(sf::Vector2f(windowWidth - PADDING_SIZE * 2, windowHeight * 600/825));
+    board_background.setFillColor(sf::Color::Black);
+    float border = (windowWidth - board_background.getSize().x) / 2.0f; 
+    board_background.setPosition(border, border);
+    m_window -> draw(board_background);
+
+    // bezowa obwodka dookola planszy
+    sf::CircleShape board_circle;
+    board_circle.setRadius((board_background.getSize().x - 2*PADDING_SIZE)/ 2);
+    board_circle.setOutlineThickness(5);
+    board_circle.setOutlineColor(beige);
+    board_circle.setFillColor(sf::Color::Transparent);
+    board_circle.setPosition(2*PADDING_SIZE, 2*PADDING_SIZE);
+    m_window -> draw(board_circle);
+
+    // rysowanie duzej planszy
     for (int row = 0; row < GRID_SIZE_LARGE; ++row) {
         for (int col = 0; col < GRID_SIZE_LARGE; ++col) {
-            m_window->draw(grid[row][col]);
+            m_window -> draw(grid[row][col]);
         }
     }
 
-    // Rysowanie małej planszy
+    // rysowanie małej planszy
     for (int ind = 0; ind < GRID_SIZE_PAWNS_ROWS * GRID_SIZE_PAWNS_COLS; ++ind) {
-        m_window->draw(pawns[ind]);
+        m_window -> draw(pawns[ind]);
     }
 
     // rysowanie wolnych do uzycia pionkow
@@ -85,12 +105,8 @@ void StatePlay::draw() const {
         const Piece& piece = m_board.pieces[i];
         if (piece.available)
         {
-            int row = i / GRID_SIZE_PAWNS_COLS;
-            int col = i % GRID_SIZE_PAWNS_COLS;
-            float x = col * CELL_SIZE_PAWNS + 10;
-            float y = GRID_SIZE_LARGE * CELL_SIZE_LARGE + row * CELL_SIZE_PAWNS + 10;
-            sf::Vector2f position(x, y);
-            piece.draw(*m_window, position, CELL_SIZE_PAWNS - 20);
+            sf::Vector2f position = pawns[i].getPosition();
+            piece.draw(*m_window, position, CELL_SIZE_PAWNS - 28);
         }
     }
 
@@ -99,8 +115,10 @@ void StatePlay::draw() const {
         for (int col = 0; col < GRID_SIZE_LARGE; ++col) {
             const Piece* piece = m_board.getCell(row, col);
             if (piece != nullptr) {
-                sf::Vector2f position(col * CELL_SIZE_LARGE + 10, row * CELL_SIZE_LARGE + 10);
-                piece->draw(*m_window, position, CELL_SIZE_LARGE - 20);
+                sf::Vector2f position = grid[row][col].getPosition();
+                position.y -= 45;
+                position.x -= 18;
+                piece->draw(*m_window, position, CELL_SIZE_LARGE - 18);
             }
         }
     }
@@ -108,27 +126,38 @@ void StatePlay::draw() const {
 
 
 void StatePlay::initializeGrids() {
-    // Tablica 4x4 (duża plansza)
+
+    // inicjalizowanie pol glownej planszy 4x4 jako bezowe kolka
     for (int row = 0; row < GRID_SIZE_LARGE; ++row) {
         for (int col = 0; col < GRID_SIZE_LARGE; ++col) {
-            grid[row][col].setSize(sf::Vector2f(CELL_SIZE_LARGE, CELL_SIZE_LARGE));
-            grid[row][col].setOutlineThickness(2);
-            grid[row][col].setOutlineColor(sf::Color::Black);
-            grid[row][col].setFillColor(sf::Color(211, 211, 211));
-            grid[row][col].setPosition(col * CELL_SIZE_LARGE, row * CELL_SIZE_LARGE);
+            float radius = (windowWidth - 12*PADDING_SIZE) / 8;
+            grid[row][col].setRadius(radius);
+            grid[row][col].setOutlineThickness(5);
+            grid[row][col].setOutlineColor(beige);
+            grid[row][col].setFillColor(sf::Color(0, 0, 0, 90));
+
+            float x = col * CELL_SIZE_LARGE + PADDING_SIZE;
+            float y = row * CELL_SIZE_LARGE + PADDING_SIZE;
+            float angle = -3.14 / 4.0f;
+            float cos_angle = std::cos(angle);
+            float sin_angle = std::sin(angle);
+
+            grid[row][col].setPosition(x * cos_angle - y * sin_angle + 35, x * sin_angle + y * cos_angle + 280);
+            grid[row][col].move(0, 0);
         }
     }
 
-    // Tablica 8x2 (mała plansza)
+    // inicjalizowanie pol malej planszy 8x2 jako bezowe kwadraty
     for (int ind = 0; ind < GRID_SIZE_PAWNS_ROWS * GRID_SIZE_PAWNS_COLS; ++ind) {
         int row = ind / GRID_SIZE_PAWNS_COLS; // Obliczamy wiersz
         int col = ind % GRID_SIZE_PAWNS_COLS; // Obliczamy kolumnę
 
         pawns[ind].setSize(sf::Vector2f(CELL_SIZE_PAWNS, CELL_SIZE_PAWNS));
-        pawns[ind].setOutlineThickness(2);
+        pawns[ind].setOutlineThickness(4);
         pawns[ind].setOutlineColor(sf::Color::Black);
-        pawns[ind].setFillColor(sf::Color(211, 211, 211));
+        pawns[ind].setFillColor(beige);
+        
         // Pozycja małej planszy: zaczyna się poniżej dużej planszy
-        pawns[ind].setPosition(col * CELL_SIZE_PAWNS, GRID_SIZE_LARGE * CELL_SIZE_LARGE + row * CELL_SIZE_PAWNS);
+        pawns[ind].setPosition((col * CELL_SIZE_PAWNS) + PADDING_SIZE, 600 + 2*PADDING_SIZE + row * CELL_SIZE_PAWNS);
     }
 }

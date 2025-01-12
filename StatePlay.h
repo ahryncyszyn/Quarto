@@ -12,10 +12,11 @@ class Player;
 
 // Stan gry definiujący właściwą rozgrywkę
 class StatePlay : public BaseState {
+    static const int PADDING_SIZE = 25;
     static const int CELL_SIZE_LARGE = 100; // Rozmiar komórki dużej planszy
     static const int GRID_SIZE_LARGE = 4;   // Rozmiar dużej planszy (GRID_SIZE_LARGE x GRID_SIZE_LARGE)
 
-    static const int CELL_SIZE_PAWNS = 50;  // Rozmiar komórki małej planszy (2 razy mniejszy)
+    static const int CELL_SIZE_PAWNS = 75;  // Rozmiar komórki małej planszy (2 razy mniejszy)
     static const int GRID_SIZE_PAWNS_ROWS = 2; // Liczba wierszy małej planszy
     static const int GRID_SIZE_PAWNS_COLS = 8; // Liczba kolumn małej planszy
 
@@ -35,6 +36,6 @@ class StatePlay : public BaseState {
 
         Board m_board;
         std::shared_ptr<Player> m_players[2];
-        sf::RectangleShape grid[GRID_SIZE_LARGE][GRID_SIZE_LARGE];
+        sf::CircleShape grid[GRID_SIZE_LARGE][GRID_SIZE_LARGE];
         sf::RectangleShape pawns[GRID_SIZE_PAWNS_ROWS * GRID_SIZE_PAWNS_COLS]; 
 };
