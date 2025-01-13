@@ -13,37 +13,26 @@ Piece::Piece(bool dark, bool square, bool hollow, bool tall)
     | tall), available(true) {}
 
 void Piece::draw(sf::RenderWindow& window, sf::Vector2f position, float size) const {
-    sf::Shape* shape;
 
-    // rysuje pionek okragly lub kwadratowy
-    if (attributes[1]) {
-        shape = new sf::RectangleShape(sf::Vector2f(size, size));
-    } else {
-        shape = new sf::CircleShape(size / 2.0f);
+    static sf::Texture pawn_texture;
+
+    // szukanie nazwy pliku na podstawie cech pionka
+    std::string filename = "images/pawn" + attributes.to_string() + ".png";
+
+    if (!pawn_texture.loadFromFile(filename))
+    {
+        std::cerr << "Loading pawn graphics unseccessful" << std::endl;
+        return;
     }
+    pawn_texture.setSmooth(true);
 
-    // rysuje pionek jasny lub ciemny
-    shape -> setFillColor(attributes[0] ? sf::Color(110, 38, 14) : sf::Color(193, 154, 107));
-    shape -> setOutlineThickness(4);
-    shape -> setOutlineColor(sf::Color::Black);
-    shape -> setPosition(position);
+    sf::Sprite pawn_sprite;
+    pawn_sprite.setTexture(pawn_texture);
 
-    // rysuje pionek wysoki lub niski (na razie zwizualizowane jako brak obwodki)
-    if (attributes[3]) {
-        shape -> setOutlineColor(sf::Color::Transparent);
-    }
+    float scale = size / pawn_texture.getSize().x;
+    pawn_sprite.setScale(scale, scale);
 
-    window.draw(*shape);
+    pawn_sprite.setPosition(position);
+    window.draw(pawn_sprite);
 
-    // rysuje pionek otwarty lub zamkniety
-    if (attributes[2]) {
-        sf::CircleShape hole(size / 4.0f);
-        hole.setFillColor(sf::Color::Transparent);
-        hole.setOutlineThickness(4);
-        hole.setOutlineColor(sf::Color::Black);
-        hole.setPosition(position + sf::Vector2f(size / 4.0f, size / 4.0f));
-        window.draw(hole);
-    }
-
-    delete shape;
 }
