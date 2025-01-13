@@ -16,7 +16,10 @@ void Piece::draw(sf::RenderWindow& window, sf::Vector2f position, float size) co
 
     static sf::Texture pawn_texture;
 
-    if (!pawn_texture.loadFromFile("images/testpawn.png"))
+    // szukanie nazwy pliku na podstawie cech pionka
+    std::string filename = "images/pawn" + attributes.to_string() + ".png";
+
+    if (!pawn_texture.loadFromFile(filename))
     {
         std::cerr << "Loading pawn graphics unseccessful" << std::endl;
         return;
