@@ -106,7 +106,7 @@ void StatePlay::draw() const {
         if (piece.available)
         {
             sf::Vector2f position = pawns[i].getPosition();
-            piece.draw(*m_window, position, CELL_SIZE_PAWNS - 28);
+            piece.draw(*m_window, position, CELL_SIZE_PAWNS);
         }
     }
 
@@ -116,8 +116,6 @@ void StatePlay::draw() const {
             const Piece* piece = m_board.getCell(row, col);
             if (piece != nullptr) {
                 sf::Vector2f position = grid[row][col].getPosition();
-                position.y -= 45;
-                position.x -= 18;
                 piece->draw(*m_window, position, CELL_SIZE_LARGE - 18);
             }
         }
@@ -149,15 +147,16 @@ void StatePlay::initializeGrids() {
 
     // inicjalizowanie pol malej planszy 8x2 jako bezowe kwadraty
     for (int ind = 0; ind < GRID_SIZE_PAWNS_ROWS * GRID_SIZE_PAWNS_COLS; ++ind) {
-        int row = ind / GRID_SIZE_PAWNS_COLS; // Obliczamy wiersz
-        int col = ind % GRID_SIZE_PAWNS_COLS; // Obliczamy kolumnę
+        int row = ind / GRID_SIZE_PAWNS_COLS;
+        int col = ind % GRID_SIZE_PAWNS_COLS;
 
         pawns[ind].setSize(sf::Vector2f(CELL_SIZE_PAWNS, CELL_SIZE_PAWNS));
         pawns[ind].setOutlineThickness(4);
         pawns[ind].setOutlineColor(sf::Color::Black);
         pawns[ind].setFillColor(beige);
         
-        // Pozycja małej planszy: zaczyna się poniżej dużej planszy
+        // ustawienie małej pod duza
         pawns[ind].setPosition((col * CELL_SIZE_PAWNS) + PADDING_SIZE, 600 + 2*PADDING_SIZE + row * CELL_SIZE_PAWNS);
+        std::cout << "the position is " << pawns[ind].getPosition().x << " " << pawns[ind].getPosition().y << std::endl;
     }
 }
