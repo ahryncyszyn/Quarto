@@ -15,7 +15,7 @@ int main() {
     Global gameContext;
     sf::ContextSettings settings;
     settings.antialiasingLevel = 16; // poprawia jakosc drukowanych okregow na planszy
-    gameContext.m_window = new sf::RenderWindow(sf::VideoMode(windowWidth, windowHeight), "Tablica 4x4 i 8x2", sf::Style::Default, settings);
+    gameContext.m_window = new sf::RenderWindow(sf::VideoMode(windowWidth, windowHeight), "Quarto!", sf::Style::Titlebar | sf::Style::Close, settings);
     gameContext.m_states = new StateManager(&gameContext);
     gameContext.m_states->changeState<StatePlay>();
 
