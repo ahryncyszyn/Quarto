@@ -9,11 +9,13 @@
 
 
 int main() {
-    constexpr int windowWidth = 400; // Szerokość obu planszy jest równa
-    constexpr int windowHeight = 500; // Wysokość jest sumą wysokości obu planszy
+    constexpr int windowWidth = 650; // Szerokość obu planszy jest równa
+    constexpr int windowHeight = 825; // Wysokość jest sumą wysokości obu planszy
 
     Global gameContext;
-    gameContext.m_window = new sf::RenderWindow(sf::VideoMode(windowWidth, windowHeight), "Tablica 4x4 i 8x2");
+    sf::ContextSettings settings;
+    settings.antialiasingLevel = 16; // poprawia jakosc drukowanych okregow na planszy
+    gameContext.m_window = new sf::RenderWindow(sf::VideoMode(windowWidth, windowHeight), "Quarto!", sf::Style::Titlebar | sf::Style::Close, settings);
     gameContext.m_states = new StateManager(&gameContext);
     gameContext.m_states->changeState<StatePlay>();
 

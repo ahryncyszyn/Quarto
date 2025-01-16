@@ -32,7 +32,7 @@ const int GRID_SIZE_PAWNS_COLS = 8; // Liczba kolumn małej planszy
 //     return 0; //brak wykoknania akcji
 // }
 
-void HumanPlayer::placePawn(sf::RectangleShape grid[][4], Board& board, sf::Vector2i mousePos) const
+void HumanPlayer::placePawn(sf::CircleShape grid[][4], Board& board, sf::Vector2i mousePos) const
 {
     // Sprawdzenie kliknięcia na dużej planszy
     for (int row = 0; row < GRID_SIZE_LARGE; ++row) {
