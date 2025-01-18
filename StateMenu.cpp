@@ -1,9 +1,10 @@
 #include "StateMenu.h"
+#include "Global.h"
 
 #include <iostream>
 
-StateMenu::StateMenu(sf::RenderWindow* window)
-    : BaseState(window, StateType::Menu)
+StateMenu::StateMenu(Global* context)
+    : BaseState(context, StateType::Menu)
 {
     if (!m_font.loadFromFile("HawthorneVintage.otf")) {
         std::cerr << "Nie udało się załadować czcionki\n";
@@ -17,7 +18,7 @@ void StateMenu::processInput(const sf::Event& event)
     if (event.type == sf::Event::MouseButtonPressed) {
         
         // sprawdzenie pozycji klikniecia
-        sf::Vector2i mousePos = sf::Mouse::getPosition(*m_window);
+        sf::Vector2i mousePos = sf::Mouse::getPosition(*m_globalContext->m_window);
 
         // sprawdzenie, czy klikniecie nastapilo na guziku z instrukcjami
 
@@ -44,7 +45,7 @@ void StateMenu::draw() const
     sf::Sprite background;
     background.setTexture(background_texture);
     background.setScale(1.75, 1.75);
-    m_window->draw(background);
+    m_globalContext->m_window->draw(background);
 
     // rysowanie napisu Quarto! na gorze
     sf::Text title;
@@ -54,9 +55,9 @@ void StateMenu::draw() const
     title.setFillColor(sf::Color::Black);
 
     float text_width = title.getLocalBounds().width;
-    float window_width = m_window->getSize().x;
+    float window_width = m_globalContext->m_window->getSize().x;
     title.setPosition((window_width - text_width) / 2, PADDING_SIZE);
-    m_window->draw(title);
+    m_globalContext->m_window->draw(title);
 
     // rysowanie opcji gry
 

@@ -21,7 +21,7 @@ class StatePlay : public BaseState {
     static const int GRID_SIZE_PAWNS_COLS = 8; // Liczba kolumn małej planszy
 
     public:
-        StatePlay(sf::RenderWindow* window = nullptr);
+        StatePlay(Global* context);
         void processInput(const sf::Event&) final;
         void update() final;
         void draw() const final;
