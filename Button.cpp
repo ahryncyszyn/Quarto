@@ -4,6 +4,7 @@
 Button::Button(const sf::Vector2f& size, const sf::Vector2f& position, const sf::String& text, const sf::Font& font)
     : button(sf::Vector2f(50, 10)), normalTexture(nullptr), hoverTexture(nullptr), isHovered(false) {
     button.setPosition(position);
+    button.setSize(size);
     button.setFillColor(sf::Color::White);
 
     buttonText.setFont(font);
