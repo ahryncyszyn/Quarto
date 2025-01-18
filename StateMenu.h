@@ -1,6 +1,7 @@
 #pragma once
 
 #include "BaseState.h"
+#include "Button.h"
 #include <SFML/Graphics.hpp>
 
 #include <vector>
@@ -20,11 +21,14 @@ class StateMenu : public BaseState {
         void draw() const final;
 
     private:
-        void initializeOptions();
-        
-        std::vector<std::string> m_options;   // lista opcji w menu
-        int m_selectedOption;                 // aktualnie wybrana opcja
+
         sf::Font m_font;                      // czcionka do wyświetlania tekstu
+        sf::Texture m_backgroundTexture;      // tło menu
         std::vector<sf::Text> m_optionTexts;  // tekst opcji wyświetlany na ekranie
+
+        // todo: jak inicjalizować guziki?
+        //Button instructionsButton;
+        //Button startButton;
+        //Button exitButton;
 
 };

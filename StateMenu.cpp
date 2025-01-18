@@ -1,16 +1,17 @@
 #include "StateMenu.h"
 #include "Global.h"
-
 #include <iostream>
 
 StateMenu::StateMenu(Global* context)
     : BaseState(context, StateType::Menu)
 {
     if (!m_font.loadFromFile("HawthorneVintage.otf")) {
-        std::cerr << "Nie udało się załadować czcionki\n";
+        std::cerr << "Failed to load font\n";
     }
 
-    initializeOptions();
+    if (!m_backgroundTexture.loadFromFile("images/menu_background.png")) {
+        std::cerr << "Loading background graphics unsuccessful" << std::endl;
+    }
 }
 
 void StateMenu::processInput(const sf::Event& event)
@@ -35,15 +36,8 @@ void StateMenu::update()
 
 void StateMenu::draw() const
 {
-    // rysowanie tła
-    sf::Texture background_texture;
-    if (!background_texture.loadFromFile("images/menu_background.png"))
-    {
-        std::cerr << "Loading background graphics unseccessful" << std::endl;
-        return;
-    }
     sf::Sprite background;
-    background.setTexture(background_texture);
+    background.setTexture(m_backgroundTexture);
     background.setScale(1.75, 1.75);
     m_globalContext->m_window->draw(background);
 
@@ -60,16 +54,7 @@ void StateMenu::draw() const
     m_globalContext->m_window->draw(title);
 
     // rysowanie opcji gry
-
-
-    // rysowanie guzika z instrukcjami 
-
-
-    // rysowanie guzika do rozpoczęcia gry
-    
-}
-
-void StateMenu::initializeOptions()
-{
-    
+    //instructionsButton.draw(*m_window);
+    //startButton.draw(*m_window);
+    //exitButton.draw(*m_window);
 }
