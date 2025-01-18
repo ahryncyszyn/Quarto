@@ -5,6 +5,7 @@
 #include "StateManager.h"
 #include "Global.h"
 #include "StatePlay.h"
+#include "StateMenu.h"
 #include "board.h"
 
 
@@ -17,7 +18,7 @@ int main() {
     settings.antialiasingLevel = 16; // poprawia jakosc drukowanych okregow na planszy
     gameContext.m_window = new sf::RenderWindow(sf::VideoMode(windowWidth, windowHeight), "Quarto!", sf::Style::Titlebar | sf::Style::Close, settings);
     gameContext.m_states = new StateManager(&gameContext);
-    gameContext.m_states->changeState<StatePlay>();
+    gameContext.m_states->changeState<StateMenu>();
 
     // Główna pętla
     // Sama przetwarza tylko zamknięcie okna
