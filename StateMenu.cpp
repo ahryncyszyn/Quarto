@@ -1,5 +1,8 @@
 #include "StateMenu.h"
 #include "Global.h"
+#include "StateManager.h"
+#include "StatePlay.h"
+
 #include <iostream>
 
 constexpr float BUTTON_HEIGHT = 40.f;
@@ -30,10 +33,22 @@ void StateMenu::processInput(const sf::Event& event)
         sf::Vector2i mousePos = sf::Mouse::getPosition(*m_globalContext->m_window);
 
         // sprawdzenie, czy klikniecie nastapilo na guziku z instrukcjami
+        if (instructionsButton.getGlobalBounds().contains(mousePos.x, mousePos.y)) {
+            return;
+        }
 
         // sprawdzenie, czy klikniecie nastapilo na guziku do rozpoczecia gry
+        if (startButton.getGlobalBounds().contains(mousePos.x, mousePos.y)) {
+            m_globalContext->m_states->initNextState<StatePlay>();
+            m_globalContext->m_states->changeState();
+            return;
+        }
 
         // sprawdzenie, czy klikniecie nastapilo na guziku do wyjscia
+        if (exitButton.getGlobalBounds().contains(mousePos.x, mousePos.y)) {
+            m_globalContext->m_window->close();
+            return;
+        }
     }
 }
 

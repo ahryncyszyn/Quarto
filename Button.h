@@ -13,6 +13,8 @@ class Button
         void setTexture(const sf::Texture& texture, const sf::Texture& hoverTexture);
         bool isClicked(const sf::Vector2i& mousePos, const sf::Event::MouseButtonEvent& mouseEvent) const;
         void setText(const std::string& text);
+        
+        sf::FloatRect getGlobalBounds() const;
 
     private:
         sf::RectangleShape button; 

@@ -61,3 +61,7 @@ void Button::setText(const std::string& text) {
                          textBounds.top + textBounds.height / 2);
 }
 
+sf::FloatRect Button::getGlobalBounds() const
+{
+    return button.getGlobalBounds();
+}
