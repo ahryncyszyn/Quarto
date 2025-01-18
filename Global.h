@@ -3,6 +3,7 @@
 class StateManager;
 namespace sf {
     class RenderWindow;
+    class Font;
 }
 
 struct Global {

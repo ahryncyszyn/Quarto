@@ -1,5 +1,8 @@
 #include "StatePlay.h"
 #include "HumanPlayer.h"
+#include "Global.h"
+#include "StateManager.h"
+#include "StateMenu.h"
 
 #include <SFML/Graphics.hpp>
 #include <iostream> // tylko do debug
@@ -9,8 +12,8 @@ const int windowWidth = 650;
 const int windowHeight = 825;
 
 
-StatePlay::StatePlay(sf::RenderWindow* window)
-    : BaseState(window, StateType::Play), m_board(false) 
+StatePlay::StatePlay(Global* context)
+    : BaseState(context, StateType::Play), m_board(false) 
 { 
     // Tutaj możemy chcieć zaimplementować ify, żeby tworzyć różne rodzaje graczy
     m_players[0] = std::make_shared<HumanPlayer>("Player 1");
@@ -26,7 +29,7 @@ void StatePlay::processInput(const sf::Event& event)
     // Jedynym interesującym inputem jest kliknięcie
     if (m_players[m_currentPlayer]->getType() == PlayerType::Human
         && event.type == sf::Event::MouseButtonPressed) {
-        sf::Vector2i mousePos = sf::Mouse::getPosition(*m_window);
+        sf::Vector2i mousePos = sf::Mouse::getPosition(*m_globalContext->m_window);
         const HumanPlayer* player = static_cast<HumanPlayer*>(m_players[m_currentPlayer].get());
 
         // Jeśli oczekujemy od gracza, że postawi pionek...
@@ -60,6 +63,8 @@ void StatePlay::update() {
 
     if (m_board.winCondition()) {
         std::cout<<m_players[m_currentPlayer]->getName()<< " zwycieza!"<<std::endl;
+        m_globalContext->m_states->initNextState<StateMenu>();
+        m_globalContext->m_states->changeState();
         return;
     }
 
@@ -76,7 +81,7 @@ void StatePlay::draw() const {
     board_background.setFillColor(sf::Color::Black);
     float border = (windowWidth - board_background.getSize().x) / 2.0f; 
     board_background.setPosition(border, border);
-    m_window -> draw(board_background);
+    m_globalContext->m_window -> draw(board_background);
 
     // bezowa obwodka dookola planszy
     sf::CircleShape board_circle;
@@ -85,18 +90,18 @@ void StatePlay::draw() const {
     board_circle.setOutlineColor(beige);
     board_circle.setFillColor(sf::Color::Transparent);
     board_circle.setPosition(2*PADDING_SIZE, 2*PADDING_SIZE);
-    m_window -> draw(board_circle);
+    m_globalContext->m_window -> draw(board_circle);
 
     // rysowanie duzej planszy
     for (int row = 0; row < GRID_SIZE_LARGE; ++row) {
         for (int col = 0; col < GRID_SIZE_LARGE; ++col) {
-            m_window -> draw(grid[row][col]);
+            m_globalContext->m_window -> draw(grid[row][col]);
         }
     }
 
     // rysowanie małej planszy
     for (int ind = 0; ind < GRID_SIZE_PAWNS_ROWS * GRID_SIZE_PAWNS_COLS; ++ind) {
-        m_window -> draw(pawns[ind]);
+        m_globalContext->m_window -> draw(pawns[ind]);
     }
 
     // rysowanie wolnych do uzycia pionkow
@@ -106,7 +111,7 @@ void StatePlay::draw() const {
         if (piece.available)
         {
             sf::Vector2f position = pawns[i].getPosition();
-            piece.draw(*m_window, position, CELL_SIZE_PAWNS);
+            piece.draw(*m_globalContext->m_window, position, CELL_SIZE_PAWNS);
         }
     }
 
@@ -116,7 +121,7 @@ void StatePlay::draw() const {
             const Piece* piece = m_board.getCell(row, col);
             if (piece != nullptr) {
                 sf::Vector2f position = grid[row][col].getPosition();
-                piece->draw(*m_window, position, CELL_SIZE_LARGE - 18);
+                piece->draw(*m_globalContext->m_window, position, CELL_SIZE_LARGE - 18);
             }
         }
     }

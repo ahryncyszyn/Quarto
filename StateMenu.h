@@ -14,7 +14,7 @@ class StateMenu : public BaseState {
     static const int WINDOW_HEIGHT = 825;
 
     public:
-        StateMenu(sf::RenderWindow* window = nullptr);
+        StateMenu(Global* context);
         void processInput(const sf::Event&) final;
         void update() final;
         void draw() const final;
