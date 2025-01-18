@@ -30,12 +30,26 @@ void StatePlay::processInput(const sf::Event& event)
     if (m_players[m_currentPlayer]->getType() == PlayerType::Human
         && event.type == sf::Event::MouseButtonPressed) {
         sf::Vector2i mousePos = sf::Mouse::getPosition(*m_globalContext->m_window);
-        const HumanPlayer* player = static_cast<HumanPlayer*>(m_players[m_currentPlayer].get());
 
         // Jeśli oczekujemy od gracza, że postawi pionek...
         if (m_stagePlace) {
             std::cout<<"Daje pionka"<<std::endl;
-            player->placePawn(grid, m_board, mousePos);
+            //player->placePawn(grid, m_board, mousePos);
+                // Sprawdzenie kliknięcia na dużej planszy
+            for (int row = 0; row < GRID_SIZE_LARGE; ++row) {
+                for (int col = 0; col < GRID_SIZE_LARGE; ++col) {
+                    if (grid[row][col].getGlobalBounds().contains(mousePos.x, mousePos.y)) {
+                        if (m_board.last_piece_indeks != -1){
+                            if (m_board.placePiece(row, col, m_board.last_piece_indeks)){
+                                printf("Ustawiono pionek %d na pozycji %d %d\n", m_board.last_piece_indeks, row, col); 
+                                m_board.last_piece_indeks = -1;
+                            }
+                            else std::cout << "Wybrany pionek nie działa\n";
+                        }
+                        else std::cout << "Nie wybrano pionka\n";
+                    }
+                }
+            }
 
             // Jeśli last_piece_indeks == -1, tzn., że gracz wykonał legalny ruch
             // Wtedy zmieniamy oczekiwany input na wybór pionka dla następnego gracza;
@@ -45,10 +59,19 @@ void StatePlay::processInput(const sf::Event& event)
         
         // W przeciwnym wypadku wybiera pionek dla następnego gracza
         else {
-            int ret = player->actualizeLastPawn(pawns, m_board, mousePos);
-            std::cout<<ret<<std::endl;
-            if (ret != -1) {
-                m_board.last_piece_indeks = ret;
+            int res = -1;    
+            for (int ind = 0; ind < GRID_SIZE_PAWNS_ROWS * GRID_SIZE_PAWNS_COLS; ++ind) {
+                if (pawns[ind].getGlobalBounds().contains(mousePos.x, mousePos.y)
+                    && m_board.pieces[ind].available) {
+                    std::cout << "Wybrano pionek o indeksie " << ind << std::endl;
+                    res = ind;
+                }
+            }
+            std::cout<<res<<std::endl;
+
+            // Gracz wybrał legalny pionek
+            if (res != -1) {
+                m_board.last_piece_indeks = res;
                 m_currentPlayer = (m_currentPlayer + 1) % 2;
                 m_stagePlace = true;
             }
