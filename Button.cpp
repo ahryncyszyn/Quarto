@@ -3,14 +3,20 @@
 
 Button::Button(const sf::Vector2f& size, const sf::Vector2f& position, const sf::String& text, const sf::Font& font)
     : button(sf::Vector2f(50, 10)), normalTexture(nullptr), hoverTexture(nullptr), isHovered(false) {
+        
     button.setPosition(position);
     button.setSize(size);
-    button.setFillColor(sf::Color::White);
-
+    button.setOutlineColor(sf::Color::Black);
+    button.setOutlineThickness(3);
     buttonText.setFont(font);
     buttonText.setString(text);
-    buttonText.setCharacterSize(24);
+    buttonText.setCharacterSize(30);
     buttonText.setFillColor(sf::Color::Black);
+
+    // kolor wypelnienia
+    if (text == "INSTRUCTIONS") button.setFillColor(sf::Color(0, 128, 0, 60));
+    else if (text == "EXIT") button.setFillColor(sf::Color(128, 0, 0, 60));
+    else button.setFillColor(sf::Color(255, 255, 255, 60));
 
     // centrowanie tekstu na przycisku
     sf::FloatRect textBounds = buttonText.getLocalBounds();

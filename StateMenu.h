@@ -2,6 +2,7 @@
 
 #include "BaseState.h"
 #include "Button.h"
+#include "DropdownButton.h"
 #include <SFML/Graphics.hpp>
 
 #include <vector>
@@ -19,14 +20,17 @@ class StateMenu : public BaseState {
         void processInput(const sf::Event&) final;
         void update() final;
         void draw() const final;
+        void showInstructions();
 
     private:
         sf::Texture m_backgroundTexture;      // tło menu
-        std::vector<sf::Text> m_optionTexts;  // tekst opcji wyświetlany na ekranie
+        sf::Font instructionsFont;
 
-        // todo: jak inicjalizować guziki?
+        Button multiplButton;
+        Button easyButton;
+        Button mediumButton;
+        Button hardButton;
         Button instructionsButton;
-        Button startButton;
         Button exitButton;
 
 };
