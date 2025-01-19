@@ -21,14 +21,12 @@ class StateMenu : public BaseState {
         void draw() const final;
 
     private:
-
-        sf::Font m_font;                      // czcionka do wyświetlania tekstu
         sf::Texture m_backgroundTexture;      // tło menu
         std::vector<sf::Text> m_optionTexts;  // tekst opcji wyświetlany na ekranie
 
         // todo: jak inicjalizować guziki?
-        //Button instructionsButton;
-        //Button startButton;
-        //Button exitButton;
+        Button instructionsButton;
+        Button startButton;
+        Button exitButton;
 
 };

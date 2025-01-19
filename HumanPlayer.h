@@ -12,6 +12,4 @@ class HumanPlayer : public Player {
 
         void placePawn(Board&) const final { };
         void getNextPiece(Board&) const final { };
-        void placePawn(sf::CircleShape grid[][4], Board& board, sf::Vector2i mousePos) const;
-        int actualizeLastPawn(sf::RectangleShape pawns[], Board& board, sf::Vector2i mousePos) const;
 };
