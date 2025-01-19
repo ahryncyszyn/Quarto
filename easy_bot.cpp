@@ -26,9 +26,9 @@ public:
             // Wybierz losowy pionek
             int randomIndex = std::rand() % availablePieces.size();
             board.last_piece_indeks = availablePieces[randomIndex];
-            std::cout << getName() << " selected piece: " << board.last_piece_indeks << std::endl;
+            std::cout << getName() << "Wybrany pionek: " << board.last_piece_indeks << std::endl;
         } else {
-            std::cout << getName() << " could not find any available pieces!" << std::endl;
+            std::cout << getName() << "Brak pionkow do wyboru." << std::endl;
         }
     }
 
@@ -53,12 +53,12 @@ public:
 
             // Umieść pionek w losowej komórce
             if (board.placePiece(row, col, board.last_piece_indeks)) {
-                std::cout << getName() << " placed piece at position: (" << row << ", " << col << ")" << std::endl;
+                std::cout << getName() << "Ustawiono pionek na pozycji: (" << row << ", " << col << ")" << std::endl;
             } else {
-                std::cout << getName() << " failed to place piece!" << std::endl;
+                std::cout << getName() << "Nie udalo sie ustawic pionka." << std::endl;
             }
         } else {
-            std::cout << getName() << " could not find an empty cell!" << std::endl;
+            std::cout << getName() << "Nie znaleziono pustego miejsca." << std::endl;
         }
     }
 };
