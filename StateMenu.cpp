@@ -82,10 +82,6 @@ void StateMenu::processInput(const sf::Event& event)
     }
 }
 
-void StateMenu::showInstructions()
-{
-}
-
 void StateMenu::update()
 {
     // aktualizacja stanu menu
@@ -103,7 +99,7 @@ void StateMenu::draw() const
     sf::Text title;
     title.setFont(*m_globalContext->m_font);
     title.setString("Quarto!");
-    title.setCharacterSize(120);
+    title.setCharacterSize(140);
     title.setFillColor(sf::Color::Black);
     float text_width = title.getLocalBounds().width;
     float window_width = m_globalContext->m_window->getSize().x;
@@ -117,4 +113,47 @@ void StateMenu::draw() const
     hardButton.draw(*m_globalContext->m_window);
     instructionsButton.draw(*m_globalContext->m_window);
     exitButton.draw(*m_globalContext->m_window);
+}
+
+void StateMenu::showInstructions()
+{
+    // wyswietla nowe okno z instrucjami
+    sf::RenderWindow instructionsWindow(sf::VideoMode(600, 350), "Instructions", sf::Style::Titlebar | sf::Style::Close);
+    sf::Text instructionsText;
+    instructionsText.setFont(instructionsFont);
+    instructionsText.setString(
+        "\n"
+        "OBJECTIVE: be the first one to create a line (horizontal, vertical, \n"
+        "or diagonal) of four pieces that share at least one common attribute: \n"
+        "color, shape, height, or fill.\n\n"
+        "GAMEPLAY: players take turns placing pieces, but they can only place\n"
+        "the piece selected by their opponent in the previous turn.\n\n"
+        "GAME MODES:\n"
+        "- Multiplayer Mode: take turns playing with a friend.\n"
+        "- Easy, Medium, and Hard Modes: challenge yourself against bots \n"
+        " of varying difficulty levels.\n"
+    );
+    instructionsText.setCharacterSize(20);
+    instructionsText.setFillColor(sf::Color::Black);
+    instructionsText.setPosition(20, 20);
+
+    sf::RectangleShape background;
+    background.setSize(sf::Vector2f(instructionsWindow.getSize().x, instructionsWindow.getSize().y));
+    background.setFillColor(sf::Color(193, 154, 107));
+
+    instructionsWindow.clear();
+    instructionsWindow.draw(background);
+    instructionsWindow.draw(instructionsText);
+    instructionsWindow.display();
+
+    while (instructionsWindow.isOpen()) {
+        sf::Event event;
+
+        // zamyka okno
+        while (instructionsWindow.pollEvent(event)) {
+            if (event.type == sf::Event::Closed) {
+                instructionsWindow.close();
+            }
+        }
+    }
 }
