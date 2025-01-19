@@ -11,6 +11,8 @@ enum class StateType {
     GameEnd
 };
 
+struct Global;
+
 // Abstrakcyjna klasa, z której będą dziedziczyć wszystkie możliwe stany gry (np. menu/granie/pauza/end-screen)
 
 class BaseState {
@@ -18,11 +20,11 @@ class BaseState {
         StateType m_type;               // rodzaj stanu gry
     
     protected:
-        sf::RenderWindow* m_window;     // ptr do okna, żeby rysować w funkcji draw()
+        Global* m_globalContext;     // ptr do okna, żeby rysować w funkcji draw()
 
     public:
-        BaseState(sf::RenderWindow* window, const StateType& type)
-            : m_window(window), m_type(type) { };
+        BaseState(Global* context, const StateType& type)
+            : m_globalContext(context), m_type(type) { };
         virtual ~BaseState() = default;
 
         // Czysto wirtualne funkcje, które stany gry będą musiały implementować

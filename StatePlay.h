@@ -21,13 +21,15 @@ class StatePlay : public BaseState {
     static const int GRID_SIZE_PAWNS_COLS = 8; // Liczba kolumn małej planszy
 
     public:
-        StatePlay(sf::RenderWindow* window = nullptr);
+        StatePlay(Global* context);
         void processInput(const sf::Event&) final;
         void update() final;
         void draw() const final;
 
     private:
         void initializeGrids();
+        template <typename T> void
+        initPlayer(int index, const std::string& name);
 
         short m_currentPlayer = 0;
         bool m_stagePlace = 0;          // W przypadku ruchów gracza ludzkiego,
@@ -39,3 +41,9 @@ class StatePlay : public BaseState {
         sf::CircleShape grid[GRID_SIZE_LARGE][GRID_SIZE_LARGE];
         sf::RectangleShape pawns[GRID_SIZE_PAWNS_ROWS * GRID_SIZE_PAWNS_COLS]; 
 };
+
+template <typename T>
+inline void StatePlay::initPlayer(int index, const std::string& name)
+{
+    m_players[index].reset(std::make_shared<T>(name));
+}

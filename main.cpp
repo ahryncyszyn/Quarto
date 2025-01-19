@@ -5,6 +5,7 @@
 #include "StateManager.h"
 #include "Global.h"
 #include "StatePlay.h"
+#include "StateMenu.h"
 #include "board.h"
 
 
@@ -15,9 +16,18 @@ int main() {
     Global gameContext;
     sf::ContextSettings settings;
     settings.antialiasingLevel = 16; // poprawia jakosc drukowanych okregow na planszy
+    gameContext.m_font = new sf::Font();
+    if (!gameContext.m_font->loadFromFile("HawthorneVintage.otf")) {
+        std::cerr << "Failed to load font\n";
+        delete gameContext.m_font;
+        return 1;
+    }
+
     gameContext.m_window = new sf::RenderWindow(sf::VideoMode(windowWidth, windowHeight), "Quarto!", sf::Style::Titlebar | sf::Style::Close, settings);
     gameContext.m_states = new StateManager(&gameContext);
-    gameContext.m_states->changeState<StatePlay>();
+    gameContext.m_states->initNextState<StateMenu>();
+    gameContext.m_states->changeState();
+
 
     // Główna pętla
     // Sama przetwarza tylko zamknięcie okna
@@ -38,6 +48,10 @@ int main() {
         gameContext.m_states->draw();        
         gameContext.m_window->display(); 
     }
+
+    delete gameContext.m_states;
+    delete gameContext.m_window;
+    delete gameContext.m_font;
 
     return 0;
 }
