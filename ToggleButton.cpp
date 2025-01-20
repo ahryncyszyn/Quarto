@@ -63,3 +63,8 @@ void ToggleButton::toggleMode()
     button.setFillColor(isHardMode ? activeColor : normalColor);
     circle.move(isHardMode ? 340.f : -340.f, 0.f);
 }
+
+bool ToggleButton::getHardMode() const
+{
+    return isHardMode;
+}

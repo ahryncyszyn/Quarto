@@ -9,7 +9,7 @@ public:
                  const sf::Font& font);
     void draw(sf::RenderWindow& window) const;
     void handleClick(const sf::Vector2i& mousePos, const sf::Event::MouseButtonEvent& mouseEvent);
-
+    bool getHardMode() const;
 private:
     sf::RectangleShape button;
     sf::CircleShape circle;

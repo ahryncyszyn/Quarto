@@ -62,7 +62,8 @@ void StateMenu::processInput(const sf::Event& event)
 
         // sprawdzenie, czy klikniecie nastapilo na guziku do rozpoczecia gry
         if (multiplButton.isClicked(mousePos, event.mouseButton)) {
-            m_globalContext->m_states->initNextState<StatePlay>();
+            bool advancedMode = modeButton.getHardMode();
+            m_globalContext->m_states->initNextState<StatePlay>(advancedMode);
             m_globalContext->m_states->changeState();
             return;
         }
