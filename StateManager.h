@@ -15,7 +15,8 @@ class StateManager {
         StateManager(Global* context)
             : m_globalContext(context) { }
         void changeState();
-        template <typename T> void initNextState();
+        template <typename T, typename... Args>
+        void initNextState(Args&&... args);
 
 
         BaseState* getNextState();
@@ -31,10 +32,9 @@ inline void StateManager::changeState()
     m_currentState = std::move(m_nextState);
 }
 
-template <typename T>
-inline void StateManager::initNextState()
-{
-    m_nextState = std::make_unique<T>(m_globalContext);
+template <typename T, typename... Args>
+inline void StateManager::initNextState(Args&&... args) {
+    m_nextState = std::make_unique<T>(m_globalContext, std::forward<Args>(args)...);
 }
 
 inline BaseState* StateManager::getNextState() {

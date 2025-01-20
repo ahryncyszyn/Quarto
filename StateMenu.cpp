@@ -14,23 +14,26 @@ constexpr float BUTTON_WIDTH = 320.f;
 StateMenu::StateMenu(Global* context)
     : BaseState(context, StateType::Menu),
     
+    modeButton({400, BUTTON_HEIGHT},
+                {context->m_window->getSize().x / 2 - 400.f / 2, 220},
+                "NORMAL SETTINGS", "ADVANCED SETTINGS", *context->m_font),
     multiplButton({BUTTON_WIDTH, BUTTON_HEIGHT}, 
-                {context->m_window->getSize().x / 2 - BUTTON_WIDTH / 2, 255}, 
+                {context->m_window->getSize().x / 2 - BUTTON_WIDTH / 2, 295}, 
                 "MULTIPLAYER MODE", *context->m_font),
     easyButton({BUTTON_WIDTH, BUTTON_HEIGHT}, 
-                {context->m_window->getSize().x / 2 - BUTTON_WIDTH / 2, 330}, 
+                {context->m_window->getSize().x / 2 - BUTTON_WIDTH / 2, 370}, 
                 "EASY MODE", *context->m_font),
     mediumButton({BUTTON_WIDTH, BUTTON_HEIGHT}, 
-                {context->m_window->getSize().x / 2 - BUTTON_WIDTH / 2, 405}, 
+                {context->m_window->getSize().x / 2 - BUTTON_WIDTH / 2, 445}, 
                 "MEDIUM MODE", *context->m_font),
     hardButton({BUTTON_WIDTH, BUTTON_HEIGHT}, 
-                {context->m_window->getSize().x / 2 - BUTTON_WIDTH / 2, 480}, 
+                {context->m_window->getSize().x / 2 - BUTTON_WIDTH / 2, 520}, 
                 "HARD MODE", *context->m_font),
     instructionsButton({BUTTON_WIDTH, BUTTON_HEIGHT}, 
-                {context->m_window->getSize().x / 2 - BUTTON_WIDTH / 2, 555}, 
+                {context->m_window->getSize().x / 2 - BUTTON_WIDTH / 2, 595}, 
                 "INSTRUCTIONS", *context->m_font),
     exitButton({BUTTON_WIDTH, BUTTON_HEIGHT}, 
-                {context->m_window->getSize().x / 2 - BUTTON_WIDTH / 2, 655}, 
+                {context->m_window->getSize().x / 2 - BUTTON_WIDTH / 2, 695}, 
                 "EXIT", *context->m_font)
 {
     // wczytywanie tła
@@ -51,6 +54,8 @@ void StateMenu::processInput(const sf::Event& event)
         // sprawdzenie pozycji klikniecia
         sf::Vector2i mousePos = sf::Mouse::getPosition(*m_globalContext->m_window);
 
+        modeButton.handleClick(mousePos, event.mouseButton);
+
         // sprawdzenie, czy klikniecie nastapilo na guziku z instrukcjami
         if (instructionsButton.isClicked(mousePos, event.mouseButton)) {
             showInstructions();
@@ -58,7 +63,8 @@ void StateMenu::processInput(const sf::Event& event)
 
         // sprawdzenie, czy klikniecie nastapilo na guziku do rozpoczecia gry
         if (multiplButton.isClicked(mousePos, event.mouseButton)) {
-            m_globalContext->m_states->initNextState<StatePlay>();
+            bool advancedMode = modeButton.getHardMode();
+            m_globalContext->m_states->initNextState<StatePlay>(advancedMode);
             m_globalContext->m_states->changeState();
             return;
         }
@@ -103,7 +109,7 @@ void StateMenu::draw() const
     sf::Text title;
     title.setFont(*m_globalContext->m_font);
     title.setString("Quarto!");
-    title.setCharacterSize(140);
+    title.setCharacterSize(120);
     title.setFillColor(sf::Color::Black);
     float text_width = title.getLocalBounds().width;
     float window_width = m_globalContext->m_window->getSize().x;
@@ -111,6 +117,7 @@ void StateMenu::draw() const
     m_globalContext->m_window->draw(title);
 
     // rysowanie wszystkich przyciskow
+    modeButton.draw(*m_globalContext->m_window);
     multiplButton.draw(*m_globalContext->m_window);
     easyButton.draw(*m_globalContext->m_window);
     mediumButton.draw(*m_globalContext->m_window);

@@ -3,6 +3,7 @@
 #include "BaseState.h"
 #include "Button.h"
 #include "DropdownButton.h"
+#include "ToggleButton.h"
 #include <SFML/Graphics.hpp>
 
 #include <vector>
@@ -26,6 +27,7 @@ class StateMenu : public BaseState {
         sf::Texture m_backgroundTexture;      // tło menu
         sf::Font instructionsFont;
 
+        ToggleButton modeButton;
         Button multiplButton;
         Button easyButton;
         Button mediumButton;
