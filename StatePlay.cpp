@@ -12,8 +12,8 @@ const int windowWidth = 650;
 const int windowHeight = 825;
 
 
-StatePlay::StatePlay(Global* context)
-    : BaseState(context, StateType::Play), m_board(false) 
+StatePlay::StatePlay(Global* context, bool isAdvancedMode)
+    : BaseState(context, StateType::Play), m_board(isAdvancedMode)
 { 
     // Tutaj możemy chcieć zaimplementować ify, żeby tworzyć różne rodzaje graczy
     m_players[0] = std::make_shared<HumanPlayer>("Player 1");
