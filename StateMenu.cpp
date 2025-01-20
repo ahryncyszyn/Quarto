@@ -71,7 +71,10 @@ void StateMenu::processInput(const sf::Event& event)
         }
         if (hardButton.isClicked(mousePos, event.mouseButton))
         {
-            // TODO: przekierowanie do gry z botem hard
+            m_globalContext->m_states->initNextState<StatePlay>();
+            m_globalContext->m_states->getNextState()->initPlayer<SmartBot>(0, hardBot);
+            m_globalContext->m_states->changeState();
+            return;
         }
 
         // sprawdzenie, czy klikniecie nastapilo na guziku do wyjscia
