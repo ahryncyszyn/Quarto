@@ -1,18 +1,14 @@
-#pragma once
-
 #include "easy_bot.h"
 #include <cstdlib>
 #include <ctime>
 
-class RandomBot : public Player {
-public:
-    RandomBot(const std::string& name) : Player(PlayerType::Bot, name) {
+    RandomBot::RandomBot(const std::string& name) : Player(PlayerType::Bot, name) {
         // Inicjalizacja generatora liczb losowych
         std::srand(static_cast<unsigned>(std::time(nullptr)));
     }
 
     // Implementacja metody wybierającej losowy pionek
-    void getNextPiece(Board& board) const override {
+    void RandomBot::getNextPiece(Board& board) const{
         std::vector<int> availablePieces;
 
         // Znajdź wszystkie dostępne pionki
@@ -33,7 +29,7 @@ public:
     }
 
     // Implementacja metody umieszczającej pionek na planszy
-    void placePawn(Board& board) const override {
+    void RandomBot::placePawn(Board& board) const{
         std::vector<std::pair<int, int>> emptyCells;
 
         // Znajdź wszystkie wolne komórki na planszy
@@ -61,4 +57,3 @@ public:
             std::cout << getName() << "Nie znaleziono pustego miejsca." << std::endl;
         }
     }
-};
