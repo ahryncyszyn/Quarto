@@ -41,7 +41,7 @@ StateMenu::StateMenu(Global* context)
         std::cerr << "Loading background graphics unsuccessful" << std::endl;
     }
 
-    if (!instructionsFont.loadFromFile("CormorantGaramond.ttf")){
+    if (!instructionsFont.loadFromFile("fonts/CormorantGaramond.ttf")){
         std::cerr << "Loading instruction font unsuccessful" << std::endl;
     }
 

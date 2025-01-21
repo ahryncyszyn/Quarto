@@ -17,7 +17,7 @@ int main() {
     sf::ContextSettings settings;
     settings.antialiasingLevel = 16; // poprawia jakosc drukowanych okregow na planszy
     gameContext.m_font = new sf::Font();
-    if (!gameContext.m_font->loadFromFile("HawthorneVintage.otf")) {
+    if (!gameContext.m_font->loadFromFile("fonts/HawthorneVintage.otf")) {
         std::cerr << "Failed to load font\n";
         delete gameContext.m_font;
         return 1;
