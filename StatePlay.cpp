@@ -267,7 +267,7 @@ void StatePlay::initializeGrids() {
     // inicjalizowanie pola podswietlajacego wybrany pionek
     chosen_pawn.setSize(sf::Vector2f(CELL_SIZE_PAWNS + 2, CELL_SIZE_PAWNS + 2));
     chosen_pawn.setFillColor(sf::Color(255, 255, 255, 100));
-    chosen_pawn.setPosition(PADDING_SIZE, 600 + 2*PADDING_SIZE);
+    chosen_pawn.setPosition(-5*PADDING_SIZE, -5*PADDING_SIZE);
 }
 
 void StatePlay::setupPlayersForMode(const std::string& mode) {
