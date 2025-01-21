@@ -15,6 +15,11 @@ const int windowHeight = 825;
 StatePlay::StatePlay(Global* context)
     : BaseState(context, StateType::Play), m_board(false) 
 { 
+    // wczytywanie tła
+    if (!m_backgroundTexture.loadFromFile("images/menu_background.png")) {
+        std::cerr << "Loading background graphics unsuccessful" << std::endl;
+    }
+
     // Tutaj możemy chcieć zaimplementować ify, żeby tworzyć różne rodzaje graczy
     m_players[0] = std::make_shared<HumanPlayer>("Player 1");
     m_players[1] = std::make_shared<HumanPlayer>("Player 2");
@@ -99,6 +104,12 @@ void StatePlay::update() {
 
 void StatePlay::draw() const {
 
+    // rysowanie tła
+    sf::Sprite background;
+    background.setTexture(m_backgroundTexture);
+    background.setScale(1.75, 1.75);
+    m_globalContext->m_window->draw(background);
+
     // czarne tlo glownej planszy
     sf::RectangleShape board_background(sf::Vector2f(windowWidth - PADDING_SIZE * 2, windowHeight * 600/825));
     board_background.setFillColor(sf::Color::Black);
@@ -136,6 +147,12 @@ void StatePlay::draw() const {
             sf::Vector2f position = pawns[i].getPosition();
             piece.draw(*m_globalContext->m_window, position, CELL_SIZE_PAWNS);
         }
+    }
+
+    // podswietlenie wybranego pionka
+    if (m_board.last_piece_indeks != -1)
+    {
+
     }
 
     // rysowanie pionkow ulozonych na planszy

@@ -37,6 +37,7 @@ class StatePlay : public BaseState {
                                         // Umieszczenie pionka, czy wybranie kolejnego pionka
 
         Board m_board;
+        sf::Texture m_backgroundTexture;
         std::shared_ptr<Player> m_players[2];
         sf::CircleShape grid[GRID_SIZE_LARGE][GRID_SIZE_LARGE];
         sf::RectangleShape pawns[GRID_SIZE_PAWNS_ROWS * GRID_SIZE_PAWNS_COLS]; 
