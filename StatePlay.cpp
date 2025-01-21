@@ -21,6 +21,9 @@ StatePlay::StatePlay(Global* context, bool isAdvancedMode)
         std::cerr << "Loading background graphics unsuccessful" << std::endl;
     }
 
+    // wczytywanie fontu na ogloszenie zwyciezcy
+    winnerFont = *context->m_font;
+
     // Tutaj możemy chcieć zaimplementować ify, żeby tworzyć różne rodzaje graczy
     m_players[0] = std::make_shared<HumanPlayer>("Player 1");
     m_players[1] = std::make_shared<HumanPlayer>("Player 2");
@@ -101,6 +104,8 @@ void StatePlay::update() {
 
     if (m_board.winCondition()) {
         std::cout<<m_players[m_currentPlayer]->getName()<< " zwycieza!"<<std::endl;
+        displayWinner();
+
         m_globalContext->m_states->initNextState<StateMenu>();
         m_globalContext->m_states->changeState();
         return;
@@ -109,6 +114,50 @@ void StatePlay::update() {
     if (m_players[m_currentPlayer]->getType() != PlayerType::Human) {
         m_players[m_currentPlayer]->getNextPiece(m_board);
         m_currentPlayer = (m_currentPlayer + 1) % 2; 
+    }
+}
+
+void StatePlay::displayWinner(){
+
+    // ustawia okienko z wygrana na srodek ekranu
+    sf::RenderWindow winnerWindow(sf::VideoMode(500, 200), "WIN!");
+    sf::VideoMode desktop = sf::VideoMode::getDesktopMode();
+    int x = (desktop.width - winnerWindow.getSize().x) / 2;
+    int y = (desktop.height - winnerWindow.getSize().y) / 2;
+    winnerWindow.setPosition(sf::Vector2i(x, y));
+
+    // rysowanie tła
+    sf::Sprite background;
+    background.setTexture(backgroundTexture);
+    background.setScale(1, 1.75);
+    winnerWindow.draw(background);
+
+    // komunikat wygranej
+    sf::Text winnerText;
+    winnerText.setFont(winnerFont);
+    winnerText.setString(m_players[m_currentPlayer]->getName() + " wins!");
+    winnerText.setCharacterSize(60);
+    winnerText.setFillColor(sf::Color::Black);
+    winnerText.setStyle(sf::Text::Bold);
+
+    // wysrodkowanie tesktu w okienku
+    sf::FloatRect textRect = winnerText.getLocalBounds();
+    winnerText.setOrigin(textRect.left + textRect.width / 2.0f, textRect.top + textRect.height / 2.0f);
+    winnerText.setPosition(winnerWindow.getSize().x / 2.0f, 
+                           winnerWindow.getSize().y / 2.0f);
+
+    while (winnerWindow.isOpen()) {
+        sf::Event event;
+        while (winnerWindow.pollEvent(event)) {
+            if (event.type == sf::Event::Closed || sf::Keyboard::isKeyPressed(sf::Keyboard::Enter)) {
+                winnerWindow.close();
+            }
+        }
+
+        winnerWindow.clear(sf::Color::Black);
+        winnerWindow.draw(background);
+        winnerWindow.draw(winnerText);
+        winnerWindow.display();
     }
 }
 
@@ -122,7 +171,7 @@ void StatePlay::draw() const {
 
     // czarne tlo glownej planszy
     sf::RectangleShape board_background(sf::Vector2f(windowWidth - PADDING_SIZE * 2, windowHeight * 600/825));
-    board_background.setFillColor(sf::Color::Black);
+    board_background.setFillColor(sf::Color(0, 0, 0, 220));
     float border = (windowWidth - board_background.getSize().x) / 2.0f; 
     board_background.setPosition(border, border);
     m_globalContext->m_window -> draw(board_background);
