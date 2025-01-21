@@ -17,13 +17,14 @@ First you need to install SFML. If the version that you want to install is avail
 Alternatively, you could build SFML from source **NOT RECOMMENDED**.   
 More information for general setup here [SFML-tutorial](https://www.sfml-dev.org/tutorials/3.0/getting-started/linux/).
 ### Step 2
-Clone the repository. In the project's directory you need to link all files using the `g++ *.cpp -c` command, then compile them with `g++ *.o -o quarto-app -lsfml-graphics -lsfml-window -lsfml-system`.
+Clone the repository for example using `git clone https://github.com/ahryncyszyn/Quarto.git`.  
+In the project's directory you need to link all files using the `g++ *.cpp -c` command, then compile them with `g++ *.o -o quarto-app -lsfml-graphics -lsfml-window -lsfml-system`.
 ### Step 3
 Run the app with `./quarto-app`!
 
 ## Features
 ### Multiplayer Mode
-2 players can engage in a multiplayer mode with each other. Players take turns placing their pieces and picking the next piece for their opponent
+2 players can engage in a local multiplayer mode with each other. Players take turns placing their pieces and picking the next piece for their opponent
 ### Advanced Mode 
 ❗ User can choose to turn on the advanced Quarto ruleset by toggling on\off the "advanced mode" button in the main menu. This ruleset makes the game also account for squares with common attributes.
 ### Easy Bot
