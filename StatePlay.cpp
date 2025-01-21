@@ -15,6 +15,11 @@ const int windowHeight = 825;
 StatePlay::StatePlay(Global* context, bool isAdvancedMode)
     : BaseState(context, StateType::Play), m_board(isAdvancedMode)
 { 
+    // wczytywanie tła
+    if (!backgroundTexture.loadFromFile("images/menu_background.png")) {
+        std::cerr << "Loading background graphics unsuccessful" << std::endl;
+    }
+
     // Tutaj możemy chcieć zaimplementować ify, żeby tworzyć różne rodzaje graczy
     m_players[0] = std::make_shared<HumanPlayer>("Player 1");
     m_players[1] = std::make_shared<HumanPlayer>("Player 2");
@@ -76,7 +81,16 @@ void StatePlay::processInput(const sf::Event& event)
                 m_stagePlace = true;
             }
         }
-            
+
+        // zmodyfikowanie pozycji podswietlenia na wybrany pionek
+        if (m_board.last_piece_indeks != -1)
+        {
+            int ind = m_board.last_piece_indeks;
+            int row = ind / GRID_SIZE_PAWNS_COLS;
+            int col = ind % GRID_SIZE_PAWNS_COLS;
+            chosen_pawn.setPosition((col * CELL_SIZE_PAWNS) + PADDING_SIZE, 
+                                     600 + 2*PADDING_SIZE + row * CELL_SIZE_PAWNS);
+        }   
     }
 }
 
@@ -98,6 +112,12 @@ void StatePlay::update() {
 }
 
 void StatePlay::draw() const {
+
+    // rysowanie tła
+    sf::Sprite background;
+    background.setTexture(backgroundTexture);
+    background.setScale(1.75, 1.75);
+    m_globalContext->m_window->draw(background);
 
     // czarne tlo glownej planszy
     sf::RectangleShape board_background(sf::Vector2f(windowWidth - PADDING_SIZE * 2, windowHeight * 600/825));
@@ -127,6 +147,9 @@ void StatePlay::draw() const {
         m_globalContext->m_window -> draw(pawns[ind]);
     }
 
+    // podswietlenie wybranego pionka
+    if (m_board.last_piece_indeks != -1) m_globalContext->m_window -> draw(chosen_pawn);
+
     // rysowanie wolnych do uzycia pionkow
     for (int i = 0; i < m_board.pieces.size(); ++i)
     {
@@ -134,7 +157,7 @@ void StatePlay::draw() const {
         if (piece.available)
         {
             sf::Vector2f position = pawns[i].getPosition();
-            piece.draw(*m_globalContext->m_window, position, CELL_SIZE_PAWNS);
+            piece.draw(*m_globalContext->m_window, sf::Vector2f(position.x, position.y + 2), CELL_SIZE_PAWNS);
         }
     }
 
@@ -144,7 +167,8 @@ void StatePlay::draw() const {
             const Piece* piece = m_board.getCell(row, col);
             if (piece != nullptr) {
                 sf::Vector2f position = grid[row][col].getPosition();
-                piece->draw(*m_globalContext->m_window, position, CELL_SIZE_LARGE - 18);
+                piece->draw(*m_globalContext->m_window, 
+                            sf::Vector2f(position.x - 5, position.y - 20), CELL_SIZE_LARGE);
             }
         }
     }
@@ -178,13 +202,19 @@ void StatePlay::initializeGrids() {
         int row = ind / GRID_SIZE_PAWNS_COLS;
         int col = ind % GRID_SIZE_PAWNS_COLS;
 
-        pawns[ind].setSize(sf::Vector2f(CELL_SIZE_PAWNS, CELL_SIZE_PAWNS));
-        pawns[ind].setOutlineThickness(4);
+        pawns[ind].setSize(sf::Vector2f(CELL_SIZE_PAWNS + 2, CELL_SIZE_PAWNS + 2));
+        pawns[ind].setOutlineThickness(1);
         pawns[ind].setOutlineColor(sf::Color::Black);
-        pawns[ind].setFillColor(beige);
+        pawns[ind].setFillColor(sf::Color(0, 0, 0, 100));
         
         // ustawienie małej pod duza
-        pawns[ind].setPosition((col * CELL_SIZE_PAWNS) + PADDING_SIZE, 600 + 2*PADDING_SIZE + row * CELL_SIZE_PAWNS);
-        std::cout << "the position is " << pawns[ind].getPosition().x << " " << pawns[ind].getPosition().y << std::endl;
+        pawns[ind].setPosition((col * CELL_SIZE_PAWNS) + PADDING_SIZE, 
+                                600 + 2*PADDING_SIZE + row * CELL_SIZE_PAWNS);
+
     }
+
+    // inicjalizowanie pola podswietlajacego wybrany pionek
+    chosen_pawn.setSize(sf::Vector2f(CELL_SIZE_PAWNS + 2, CELL_SIZE_PAWNS + 2));
+    chosen_pawn.setFillColor(sf::Color(255, 255, 255, 100));
+    chosen_pawn.setPosition(PADDING_SIZE, 600 + 2*PADDING_SIZE);
 }
