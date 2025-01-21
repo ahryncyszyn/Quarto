@@ -70,7 +70,12 @@ void StateMenu::processInput(const sf::Event& event)
         }
         if (easyButton.isClicked(mousePos, event.mouseButton))
         {
-            // TODO: przekierowanie do gry z botem easy
+            bool advancedMode = modeButton.getHardMode();
+            m_globalContext->m_states->initNextState<StatePlay>(advancedMode);
+            auto* nextState = dynamic_cast<StatePlay*>(m_globalContext->m_states->getNextState());
+            nextState->setupPlayersForMode("easyBot");
+            m_globalContext->m_states->changeState();
+            return;
         }
         if (mediumButton.isClicked(mousePos, event.mouseButton))
         {

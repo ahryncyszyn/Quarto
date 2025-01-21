@@ -4,6 +4,7 @@
 #include "StateManager.h"
 #include "StateMenu.h"
 #include "smart_bot.h"
+#include "easy_bot.h"
 
 #include <SFML/Graphics.hpp>
 #include <iostream> // tylko do debug
@@ -272,5 +273,9 @@ void StatePlay::initializeGrids() {
 void StatePlay::setupPlayersForMode(const std::string& mode) {
     if (mode == "hardBot") {
         initPlayer<SmartBot>(0, "hardBot");
+    }
+    
+    if (mode == "easyBot") {
+        initPlayer<RandomBot>(0, "easyBot");
     }
 }
