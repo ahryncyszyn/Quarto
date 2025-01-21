@@ -12,7 +12,7 @@
 
 class StateMenu : public BaseState {
 
-    static const int PADDING_SIZE = 50;
+    static const int PADDING_SIZE = 30;
     static const int WINDOW_WIDTH = 650;
     static const int WINDOW_HEIGHT = 825;
 

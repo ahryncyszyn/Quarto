@@ -15,31 +15,32 @@ ToggleButton::ToggleButton(const sf::Vector2f& size, const sf::Vector2f& positio
     button.setFillColor(normalColor);
 
     circle.setPosition(position);
-    circle.move(3, 3);
-    float radius = button.getSize().y / 2.0 - 3;
+    circle.move(4, 4);
+    float radius = button.getSize().y / 2.0 - 4;
     circle.setRadius(radius);
     circle.setOutlineThickness(3);
     circle.setOutlineColor(sf::Color::Black);
-    circle.setFillColor(sf::Color(255, 255, 255, 60));
+    circle.setFillColor(sf::Color(128, 128, 128, 128));
 
     textON.setString(newTextON);
     textOFF.setString(newTextOFF);
     textON.setFont(font);
     textOFF.setFont(font);
-    textON.setCharacterSize(24);
-    textOFF.setCharacterSize(24);
+    textON.setCharacterSize(25);
+    textOFF.setCharacterSize(25);
     textON.setFillColor(sf::Color::Black);
     textOFF.setFillColor(sf::Color::Black);
 
-    // centrowanie tekstu
+    // wysrodkowanie napisu on
     sf::FloatRect textBoundsON = textON.getLocalBounds();
-    textON.setOrigin(textBoundsON.left + textBoundsON.width / 2, 
-                   textBoundsON.top + textBoundsON.height / 2);
+    textON.setOrigin(textBoundsON.left + textBoundsON.width / 2.0f,
+                    textBoundsON.top + textBoundsON.height / 2.0f);
     textON.setPosition(position + size / 2.0f);
 
+    // wysrodkowanie napisu off
     sf::FloatRect textBoundsOFF = textOFF.getLocalBounds();
-    textOFF.setOrigin(radius + textBoundsOFF.left + textBoundsOFF.width / 2, 
-                   textBoundsOFF.top + textBoundsOFF.height / 2);
+    textOFF.setOrigin(textBoundsOFF.left + textBoundsOFF.width / 2.0f,
+                    textBoundsOFF.top + textBoundsOFF.height / 2.0f);
     textOFF.setPosition(position + size / 2.0f);
 }
 
