@@ -1,6 +1,6 @@
 # Quarto
-## What's Quatro about?
-🎲 Quatro is a strategy game played on a 4x4 grid, and the objective is to align 4 pieces with a common attribute:
+## What's Quarto about?
+🎲 Quarto is a strategy game played on a 4x4 grid, and the objective is to align 4 pieces with a common attribute:
 - color
 - shape
 - height
@@ -22,5 +22,24 @@ In the project's directory you need to link all files using the `g++ *.cpp -c` c
 Run the app with `./quatro-app`!
 
 ## Features
-
+### Multiplayer Mode
+2 players can engage in a multiplayer mode with each other. Players take turns placing their pieces and picking the next piece for their opponent
+### Advanced Mode 
+❗ User can choose to turn on the advanced Quarto ruleset by toggling on\off the "advanced mode" button in the main menu. This ruleset makes the game also account for squares with common attributes.
+### Easy Bot
+The user can play against an easy difficulty bot. The bot is internally called RandomBot because it chooses its moves at random. It shouldn't be hard to outplay it!
+### Hard Bot
+The user can play against a high difficulty bot implemented with an algorithm that makes it evaluate its best moves. 
+### Instructions
+The user can choose to display a set of instruction if they're not sure how Quarto works.
 ## Unimplemented features
+### Medium Bot
+There is no medium difficulty implementation at the time. Only Easy and Hard.
+### Bot tournament
+We haven't managed to create a tournament where the bots could play against each other.
+### Advanced mode bots
+Bots currently don't know if the advanced mode is turned on so they might not be able to evaluate moves based on the different ruleset.
+### Bugs:
+- The win screen window crashes after a few seconds. For now you can just click on "wait" and exit the screen to go back to the main menu.
+
+
