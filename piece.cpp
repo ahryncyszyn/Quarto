@@ -18,7 +18,6 @@ void Piece::draw(sf::RenderWindow& window, sf::Vector2f position, float size) co
 
     // szukanie nazwy pliku na podstawie cech pionka
     std::string filename = "images/pawn" + attributes.to_string() + ".png";
-
     if (!pawn_texture.loadFromFile(filename))
     {
         std::cerr << "Loading pawn graphics unseccessful" << std::endl;
@@ -28,11 +27,8 @@ void Piece::draw(sf::RenderWindow& window, sf::Vector2f position, float size) co
 
     sf::Sprite pawn_sprite;
     pawn_sprite.setTexture(pawn_texture);
-
-    float scale = size / pawn_texture.getSize().x;
+    float scale = (size - 3) / pawn_texture.getSize().x;
     pawn_sprite.setScale(scale, scale);
-
     pawn_sprite.setPosition(position);
     window.draw(pawn_sprite);
-
 }

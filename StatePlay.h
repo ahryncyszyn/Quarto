@@ -41,6 +41,7 @@ class StatePlay : public BaseState {
         std::shared_ptr<Player> m_players[2];
         sf::CircleShape grid[GRID_SIZE_LARGE][GRID_SIZE_LARGE];
         sf::RectangleShape pawns[GRID_SIZE_PAWNS_ROWS * GRID_SIZE_PAWNS_COLS]; 
+        sf::RectangleShape chosen_pawn;
 };
 
 template <typename T>
