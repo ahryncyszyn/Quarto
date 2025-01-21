@@ -25,6 +25,7 @@ class StatePlay : public BaseState {
         void processInput(const sf::Event&) final;
         void update() final;
         void draw() const final;
+        void displayWinner();
 
     private:
         void initializeGrids();
@@ -37,6 +38,7 @@ class StatePlay : public BaseState {
                                         // Umieszczenie pionka, czy wybranie kolejnego pionka
 
         Board m_board;
+        sf::Font winnerFont;
         sf::Texture backgroundTexture;
         std::shared_ptr<Player> m_players[2];
         sf::CircleShape grid[GRID_SIZE_LARGE][GRID_SIZE_LARGE];
