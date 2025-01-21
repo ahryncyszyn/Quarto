@@ -17,9 +17,9 @@ First you need to install SFML. If the version that you want to install is avail
 Alternatively, you could build SFML from source **NOT RECOMMENDED**.   
 More information for general setup here [SFML-tutorial](https://www.sfml-dev.org/tutorials/3.0/getting-started/linux/).
 ### Step 2
-In the project's directory you need to link all files using the `g++ *.cpp -c` command, then compile them with `g++ *.o -o quatro-app -lsfml-graphics -lsfml-window -lsfml-system`.
+In the project's directory you need to link all files using the `g++ *.cpp -c` command, then compile them with `g++ *.o -o quarto-app -lsfml-graphics -lsfml-window -lsfml-system`.
 ### Step 3
-Run the app with `./quatro-app`!
+Run the app with `./quarto-app`!
 
 ## Features
 ### Multiplayer Mode
@@ -27,9 +27,9 @@ Run the app with `./quatro-app`!
 ### Advanced Mode 
 ❗ User can choose to turn on the advanced Quarto ruleset by toggling on\off the "advanced mode" button in the main menu. This ruleset makes the game also account for squares with common attributes.
 ### Easy Bot
-The user can play against an easy difficulty bot. The bot is internally called RandomBot because it chooses its moves at random. It shouldn't be hard to outplay it!
+The user can play against an easy difficulty bot. The bot is internally called RandomBot because it chooses its moves at random. It shouldn't be hard to outplay it! Player chooses the bot's first piece.
 ### Hard Bot
-The user can play against a high difficulty bot implemented with an algorithm that makes it evaluate its best moves. 
+The user can play against a high difficulty bot implemented with an algorithm that makes it evaluate its best moves. Player chooses the bot's first piece.
 ### Instructions
 The user can choose to display a set of instruction if they're not sure how Quarto works.
 ## Unimplemented features
