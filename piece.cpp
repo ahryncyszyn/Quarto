@@ -36,3 +36,7 @@ void Piece::draw(sf::RenderWindow& window, sf::Vector2f position, float size) co
     window.draw(pawn_sprite);
 
 }
+
+bool Piece::hasCommonFeature(const Piece& other) const {
+    return (this->attributes == other.attributes);
+}

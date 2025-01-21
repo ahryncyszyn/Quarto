@@ -24,6 +24,7 @@ public:
         }
         return nullptr;
     }
+    std::vector<std::vector<std::pair<int, int>>> getLines(int row, int col) const;
 
 private:
     

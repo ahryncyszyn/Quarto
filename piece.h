@@ -21,5 +21,7 @@ public:
     //Konstruktor
     Piece(bool dark, bool square, bool hollow, bool tall);
 
+    bool hasCommonFeature(const Piece& other) const;
+
     void draw(sf::RenderWindow& window, sf::Vector2f position, float size) const;
 };

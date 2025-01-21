@@ -25,6 +25,7 @@ class StatePlay : public BaseState {
         void processInput(const sf::Event&) final;
         void update() final;
         void draw() const final;
+        void setupPlayersForMode(const std::string& mode);
 
     private:
         void initializeGrids();
@@ -45,5 +46,5 @@ class StatePlay : public BaseState {
 template <typename T>
 inline void StatePlay::initPlayer(int index, const std::string& name)
 {
-    m_players[index].reset(std::make_shared<T>(name));
+    m_players[index] = std::make_shared<T>(name);
 }

@@ -3,6 +3,7 @@
 #include "Global.h"
 #include "StateManager.h"
 #include "StateMenu.h"
+#include "smart_bot.h"
 
 #include <SFML/Graphics.hpp>
 #include <iostream> // tylko do debug
@@ -186,5 +187,11 @@ void StatePlay::initializeGrids() {
         // ustawienie małej pod duza
         pawns[ind].setPosition((col * CELL_SIZE_PAWNS) + PADDING_SIZE, 600 + 2*PADDING_SIZE + row * CELL_SIZE_PAWNS);
         std::cout << "the position is " << pawns[ind].getPosition().x << " " << pawns[ind].getPosition().y << std::endl;
+    }
+}
+
+void StatePlay::setupPlayersForMode(const std::string& mode) {
+    if (mode == "hardBot") {
+        initPlayer<SmartBot>(0, "hardBot");
     }
 }
