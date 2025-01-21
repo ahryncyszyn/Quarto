@@ -97,3 +97,37 @@ bool Board::checkLine(Piece* p1, Piece* p2, Piece* p3, Piece* p4) const {
 
     return inverse.any();
 }
+
+std::vector<std::vector<std::pair<int, int>>> Board::getLines(int row, int col) const {
+    std::vector<std::vector<std::pair<int, int>>> lines;
+
+    std::vector<std::pair<int, int>> rowLine;
+    for (int c = 0; c < 4; ++c) {
+        rowLine.push_back({row, c});
+    }
+    lines.push_back(rowLine);
+
+    std::vector<std::pair<int, int>> colLine;
+    for (int r = 0; r < 4; ++r) {
+        colLine.push_back({r, col});
+    }
+    lines.push_back(colLine);
+
+    if (row == col) {
+        std::vector<std::pair<int, int>> mainDiag;
+        for (int i = 0; i < 4; ++i) {
+            mainDiag.push_back({i, i});
+        }
+        lines.push_back(mainDiag);
+    }
+
+    if (row + col == 3) {
+        std::vector<std::pair<int, int>> antiDiag;
+        for (int i = 0; i < 4; ++i) {
+            antiDiag.push_back({i, 3 - i});
+        }
+        lines.push_back(antiDiag);
+    }
+
+    return lines;
+}

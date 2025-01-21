@@ -34,7 +34,11 @@ inline void StateManager::changeState()
 
 template <typename T, typename... Args>
 inline void StateManager::initNextState(Args&&... args) {
-    m_nextState = std::make_unique<T>(m_globalContext, std::forward<Args>(args)...);
+    if constexpr (std::is_constructible_v<T, Global*, Args...>) {
+        m_nextState = std::make_unique<T>(m_globalContext, std::forward<Args>(args)...);
+    } else {
+        static_assert(std::is_constructible_v<T, Global*, Args...>, "StatePlay requires Global* and bool constructor.");
+    }
 }
 
 inline BaseState* StateManager::getNextState() {

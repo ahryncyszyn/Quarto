@@ -3,6 +3,7 @@
 #include "Global.h"
 #include "StateManager.h"
 #include "StateMenu.h"
+#include "smart_bot.h"
 
 #include <SFML/Graphics.hpp>
 #include <iostream> // tylko do debug
@@ -266,4 +267,10 @@ void StatePlay::initializeGrids() {
     chosen_pawn.setSize(sf::Vector2f(CELL_SIZE_PAWNS + 2, CELL_SIZE_PAWNS + 2));
     chosen_pawn.setFillColor(sf::Color(255, 255, 255, 100));
     chosen_pawn.setPosition(PADDING_SIZE, 600 + 2*PADDING_SIZE);
+}
+
+void StatePlay::setupPlayersForMode(const std::string& mode) {
+    if (mode == "hardBot") {
+        initPlayer<SmartBot>(0, "hardBot");
+    }
 }

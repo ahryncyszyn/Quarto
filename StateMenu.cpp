@@ -78,10 +78,12 @@ void StateMenu::processInput(const sf::Event& event)
         }
         if (hardButton.isClicked(mousePos, event.mouseButton))
         {
-            //m_globalContext->m_states->initNextState<StatePlay>();
-            //m_globalContext->m_states->getNextState()->initPlayer<SmartBot>(0, "hardBot");
-            //m_globalContext->m_states->changeState();
-            //return;
+            bool advancedMode = modeButton.getHardMode();
+            m_globalContext->m_states->initNextState<StatePlay>(advancedMode);
+            auto* nextState = dynamic_cast<StatePlay*>(m_globalContext->m_states->getNextState());
+            nextState->setupPlayersForMode("hardBot");
+            m_globalContext->m_states->changeState();
+            return;
         }
 
         // sprawdzenie, czy klikniecie nastapilo na guziku do wyjscia
