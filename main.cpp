@@ -42,11 +42,11 @@ int main() {
             }
         }
 
-        gameContext.m_states->update();
 
         gameContext.m_window->clear(sf::Color::White);
         gameContext.m_states->draw();        
-        gameContext.m_window->display(); 
+        gameContext.m_window->display();
+        gameContext.m_states->update();
     }
 
     delete gameContext.m_states;
