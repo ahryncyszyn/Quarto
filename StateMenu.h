@@ -24,7 +24,7 @@ class StateMenu : public BaseState {
         void showInstructions();
 
     private:
-        sf::Texture m_backgroundTexture;      // tło menu
+        sf::Texture backgroundTexture;      // tło menu
         sf::Font instructionsFont;
 
         ToggleButton modeButton;

@@ -16,7 +16,7 @@ StatePlay::StatePlay(Global* context)
     : BaseState(context, StateType::Play), m_board(false) 
 { 
     // wczytywanie tła
-    if (!m_backgroundTexture.loadFromFile("images/menu_background.png")) {
+    if (!backgroundTexture.loadFromFile("images/menu_background.png")) {
         std::cerr << "Loading background graphics unsuccessful" << std::endl;
     }
 
@@ -106,7 +106,7 @@ void StatePlay::draw() const {
 
     // rysowanie tła
     sf::Sprite background;
-    background.setTexture(m_backgroundTexture);
+    background.setTexture(backgroundTexture);
     background.setScale(1.75, 1.75);
     m_globalContext->m_window->draw(background);
 
@@ -195,13 +195,14 @@ void StatePlay::initializeGrids() {
         int row = ind / GRID_SIZE_PAWNS_COLS;
         int col = ind % GRID_SIZE_PAWNS_COLS;
 
-        pawns[ind].setSize(sf::Vector2f(CELL_SIZE_PAWNS, CELL_SIZE_PAWNS));
-        pawns[ind].setOutlineThickness(4);
+        pawns[ind].setSize(sf::Vector2f(CELL_SIZE_PAWNS + 2, CELL_SIZE_PAWNS + 2));
+        pawns[ind].setOutlineThickness(1);
         pawns[ind].setOutlineColor(sf::Color::Black);
-        pawns[ind].setFillColor(beige);
+        pawns[ind].setFillColor(sf::Color(0, 0, 0, 60));
         
         // ustawienie małej pod duza
-        pawns[ind].setPosition((col * CELL_SIZE_PAWNS) + PADDING_SIZE, 600 + 2*PADDING_SIZE + row * CELL_SIZE_PAWNS);
-        std::cout << "the position is " << pawns[ind].getPosition().x << " " << pawns[ind].getPosition().y << std::endl;
+        pawns[ind].setPosition((col * CELL_SIZE_PAWNS) + PADDING_SIZE, 
+                                600 + 2*PADDING_SIZE + row * CELL_SIZE_PAWNS);
+
     }
 }

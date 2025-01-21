@@ -36,7 +36,7 @@ StateMenu::StateMenu(Global* context)
                 "EXIT", *context->m_font)
 {
     // wczytywanie tła
-    if (!m_backgroundTexture.loadFromFile("images/menu_background.png")) {
+    if (!backgroundTexture.loadFromFile("images/menu_background.png")) {
         std::cerr << "Loading background graphics unsuccessful" << std::endl;
     }
 
@@ -96,7 +96,7 @@ void StateMenu::draw() const
 {
     // rysowanie tła
     sf::Sprite background;
-    background.setTexture(m_backgroundTexture);
+    background.setTexture(backgroundTexture);
     background.setScale(1.75, 1.75);
     m_globalContext->m_window->draw(background);
 
